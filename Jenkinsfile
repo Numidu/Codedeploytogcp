@@ -1,11 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'maven-3.9.5'   // 👈 this name must match the one you added
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKERHUB_USER = 'numidu'
-        JAVA_OPTS = "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
-    }
+       
 
     stages {
         stage('Clone Repository') {
