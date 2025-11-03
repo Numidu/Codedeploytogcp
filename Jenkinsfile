@@ -2,14 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKERHUB_USER = 'numidu'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yourusername/my-fullstack-app.git'
+                git branch: 'main',
+                    credentialsId: 'github_pat',
+                    url: 'https://github.com/Numidu/Codedeploytogcp.git'
             }
         }
 
@@ -43,14 +45,14 @@ pipeline {
             steps {
                 sshagent(['gcp_vm_key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@<VM_EXTERNAL_IP> '
-                        cd ~/app || git clone https://github.com/yourusername/my-fullstack-app.git ~/app &&
-                        cd ~/app &&
-                        git pull &&
-                        docker-compose down &&
-                        docker-compose pull &&
-                        docker-compose up -d --build
-                    '
+                        ssh -o StrictHostKeyChecking=no ubuntu@<VM_EXTERNAL_IP> '
+                            cd ~/app || git clone https://github.com/Numidu/Code-deploy-to-gcp.git ~/app &&
+                            cd ~/app &&
+                            git pull &&
+                            docker-compose down &&
+                            docker-compose pull &&
+                            docker-compose up -d --build
+                        '
                     """
                 }
             }
