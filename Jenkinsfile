@@ -15,6 +15,13 @@ pipeline {
                     url: 'https://github.com/Numidu/Codedeploytogcp.git'
             }
         }
+    stage('Build Backend Jar') {
+        steps {
+                dir('userbackend') {
+                    sh 'mvn clean package -DskipTests'
+            }
+        }
+    }
 
         stage('Build Backend Image') {
             steps {
