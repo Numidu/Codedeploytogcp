@@ -27,7 +27,7 @@ export default function SetUser() {
 
   return (
     <div style={{ maxWidth: "400px", margin: "20px auto" }}>
-      <h2>Save User</h2>
+      <h2>Save User Users</h2>
       <input
         type="text"
         name="name"
